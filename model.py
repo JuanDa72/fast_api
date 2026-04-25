@@ -11,3 +11,15 @@ class Book(Base):
     anio = Column(Integer, nullable=False)
     genero = Column(VARCHAR(255), nullable=False)
     disponible = Column(Integer, nullable=False)
+
+    #nuevo
+    editorial = Column(VARCHAR(255), nullable=True)
+
+
+class User(Base):
+    __tablename__ = "users"
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(VARCHAR(255), unique=True, index=True, nullable=False)
+    email = Column(VARCHAR(255), unique=True, index=True, nullable=False)
+    hashed_password = Column(VARCHAR(255), nullable=False)
+    is_active = Column(Integer, default=1)

@@ -3,3 +3,8 @@ uvicorn
 sqlalchemy
 pymysql
 pydantic-settings
+alembic
+passlib[argon2]
+python-jose[cryptography]
+python-multipart
+pydantic[email]

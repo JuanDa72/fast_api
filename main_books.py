@@ -4,7 +4,8 @@ import model
 from router_books import router as book_router
 
 #Create the database tables
-model.Base.metadata.create_all(bind=engine)
+#model.Base.metadata.create_all(bind=engine)
+#Not necessary now because alembic will handle the migrations
 
 app = FastAPI(title="Books API", description="API for managing books", version="1.0.0")
 app.include_router(book_router)
