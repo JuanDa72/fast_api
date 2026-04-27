@@ -1,0 +1,181 @@
+{
+	"info": {
+		"name": "Books API Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "1. Usuarios y Auth",
+			"item": [
+				{
+					"name": "Registrar Usuario",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"heisenberg\",\n    \"email\": \"walter@white.com\",\n    \"password\": \"saymyname\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/users/users/",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["users", ""]
+						}
+					}
+				},
+				{
+					"name": "Login (Obtener Token)",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "username",
+									"value": "heisenberg",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "saymyname",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/users/login",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["users", "login"]
+						}
+					}
+				}
+			]
+		},
+		{
+			"name": "2. Libros (CRUD)",
+			"item": [
+				{
+					"name": "Obtener todos los libros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", ""]
+						}
+					}
+				},
+				{
+					"name": "Obtener libro por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/1",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", "1"]
+						}
+					}
+				},
+				{
+					"name": "Crear Libro",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Hojas de Hierba\",\n    \"autor\": \"Walt Whitman\",\n    \"anio\": 1855,\n    \"genero\": \"Poesía\",\n    \"disponible\": 1,\n    \"editorial\": \"Penguin Classics\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", ""]
+						}
+					}
+				},
+				{
+					"name": "Reemplazar Libro (PUT)",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"titulo\": \"Hojas de Hierba (Edición Revisada)\",\n    \"autor\": \"Walt Whitman\",\n    \"anio\": 1892,\n    \"genero\": \"Poesía Clásica\",\n    \"disponible\": 1,\n    \"editorial\": \"Penguin Classics\"\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/1",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", "1"]
+						}
+					}
+				},
+				{
+					"name": "Actualizar Libro (PATCH)",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"disponible\": 0\n}"
+						},
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/1",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", "1"]
+						}
+					}
+				},
+				{
+					"name": "Eliminar Libro",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://127.0.0.1:8000/books/1",
+							"protocol": "http",
+							"host": ["127", "0", "0", "1"],
+							"port": "8000",
+							"path": ["books", "1"]
+						}
+					}
+				}
+			]
+		}
+	]
+}

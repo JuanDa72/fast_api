@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from database import engine
 import model
 from router_books import router as book_router
+from router_user import router as router_user
 
 #Create the database tables
 #model.Base.metadata.create_all(bind=engine)
@@ -9,6 +10,7 @@ from router_books import router as book_router
 
 app = FastAPI(title="Books API", description="API for managing books", version="1.0.0")
 app.include_router(book_router)
+app.include_router(router_user)
 
 @app.get("/")
 def read_root():

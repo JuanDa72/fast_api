@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
 import model, schemas
+from utils import get_password_hash
 
 def get_all_books(db: Session):
     return db.query(model.Book).all()
@@ -76,3 +77,36 @@ def delete_book(db: Session, book_id: int):
         db.rollback()
         print(f"Error deleting book: {e}")
         return None
+    
+
+#Sections for users
+
+def get_user_by_username(db: Session, username: str):
+    return db.query(model.User).filter(model.User.username == username).first()
+
+def get_user_by_email(db: Session, email: str):
+    return db.query(model.User).filter(model.User.email == email).first()
+
+def create_user(db: Session, user: schemas.UserCreate):
+
+    if get_user_by_email(db, user.email) or get_user_by_username(db, user.username):
+        print("User with this email or username already exists")
+        return None
+
+    hashed_password = get_password_hash(user.password)
+    db_user = model.User(username=user.username, email=user.email, hashed_password=hashed_password)
+    db.add(db_user)
+
+    try:
+        db.commit()
+        db.refresh(db_user)
+        return db_user
+    
+    except Exception as e:
+        db.rollback()
+        print(f"Error creating user: {e}")
+        return None
+    
+
+    
+

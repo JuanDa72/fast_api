@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import Optional
 
 class BookBase(BaseModel):
@@ -29,8 +29,11 @@ class BookUpdate(BaseModel):
 
 class UserBase(BaseModel):
     username: str
-    email: str
-    is_active: bool = True
+    email: EmailStr
+
+
+class UserCreate(UserBase):
+    password: str
 
 
 class UserLogin(BaseModel):
