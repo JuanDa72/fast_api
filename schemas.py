@@ -1,5 +1,6 @@
 from pydantic import BaseModel, ConfigDict, EmailStr
 from typing import Optional
+from datetime import datetime
 
 class BookBase(BaseModel):
     titulo: str
@@ -7,7 +8,6 @@ class BookBase(BaseModel):
     anio: int
     genero: str
     disponible: bool=1
-    editorial: Optional[str] = None
 
 class BookCreate(BookBase):
     pass
@@ -24,7 +24,6 @@ class BookUpdate(BaseModel):
     anio: Optional[int] = None
     genero: Optional[str] = None
     disponible: Optional[bool] = None   
-    editorial: Optional[str] = None
 
 
 class UserBase(BaseModel):
@@ -44,6 +43,23 @@ class UserLogin(BaseModel):
 class UserResponse(UserBase):
     id: int
     is_active: bool
+    role: str
 
     model_config = ConfigDict(from_attributes=True)
+
+
+#section for loans
+class LoanCreate(BaseModel):
+    book_id: int
+    #user id is going to be obtained from the token
+
+class loanResponse(BaseModel):
+    id: int
+    user_id: int
+    book_id: int
+    fecha_prestamo: datetime
+    fecha_devolucion: Optional[datetime] = None
+
+    model_config = ConfigDict(from_attributes=True)
+
 

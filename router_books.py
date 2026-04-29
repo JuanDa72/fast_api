@@ -1,7 +1,7 @@
 from fastapi import APIRouter, status, HTTPException, Depends
 from sqlalchemy.orm import Session
 import service, schemas
-from dependencies import get_db
+from dependencies import get_db, get_current_role
 
 #Use tags to group the endpoints in the documentation
 router=APIRouter(prefix="/books", tags=["books"])
@@ -21,7 +21,7 @@ def get_book(book_id: int, db: Session = Depends(get_db)):
 
 
 @router.post("/", response_model=schemas.BookResponse)
-def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
+def create_book(book: schemas.BookCreate, db: Session = Depends(get_db), current_user: schemas.UserResponse = Depends(get_current_role)):
     existing_book = service.get_book_by_name(db, book.titulo)
     if existing_book:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Book with this title already exists")
@@ -33,7 +33,7 @@ def create_book(book: schemas.BookCreate, db: Session = Depends(get_db)):
 
 
 @router.put("/{book_id}", response_model=schemas.BookResponse)
-def replace_book(book_id: int, book: schemas.BookCreate, db: Session = Depends(get_db)):
+def replace_book(book_id: int, book: schemas.BookCreate, db: Session = Depends(get_db), current_user: schemas.UserResponse = Depends(get_current_role)):
     db_book = service.put_book(db, book_id, book)
     if not db_book:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
@@ -41,7 +41,7 @@ def replace_book(book_id: int, book: schemas.BookCreate, db: Session = Depends(g
 
 
 @router.patch("/{book_id}", response_model=schemas.BookResponse)
-def update_book(book_id: int, book: schemas.BookUpdate, db: Session = Depends(get_db)):
+def update_book(book_id: int, book: schemas.BookUpdate, db: Session = Depends(get_db), current_user: schemas.UserResponse = Depends(get_current_role)):
     db_book = service.update_book(db, book_id, book)
     if not db_book:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
@@ -49,7 +49,7 @@ def update_book(book_id: int, book: schemas.BookUpdate, db: Session = Depends(ge
 
 
 @router.delete("/{book_id}", response_model=schemas.BookResponse)
-def delete_book(book_id: int, db: Session = Depends(get_db)):
+def delete_book(book_id: int, db: Session = Depends(get_db), current_user: schemas.UserResponse = Depends(get_current_role)):
     deleted_book=service.delete_book(db, book_id)
     if not deleted_book:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Book not found")
